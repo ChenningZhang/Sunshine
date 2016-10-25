@@ -1,7 +1,12 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,10 +40,31 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+
+        if (id == R.id.action_location) {
+            showLocationOnMap();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showLocationOnMap() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String zipcodePref = sharedPreferences.getString("location", "94043");
+        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon().appendQueryParameter("q", zipcodePref).build();
+        Log.d("LOCATIONURI", geoLocation.toString());
+        Intent intentLocation = new Intent(Intent.ACTION_VIEW);
+        intentLocation.setData(geoLocation);
+        if (intentLocation.resolveActivity(getPackageManager()) != null) {
+            startActivity(intentLocation);
+        } else {
+            Log.e("LOCATION ERROR", "No Map App available!");
+        }
     }
 
 }

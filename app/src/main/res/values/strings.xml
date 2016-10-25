@@ -5,4 +5,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="pref_unit_celsius_label">Celsius</string>
+    <string name="pref_unit_fahrenheit_label">Fahrenheit</string>
+    <string name="pref_unit_celsius">celsius</string>
+    <string name="pref_unit_fahrenheit">fahrenheit</string>
+
+    <string name="menu_item_location">Location</string>
+
 </resources>
